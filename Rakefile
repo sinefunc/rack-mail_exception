@@ -10,6 +10,7 @@ begin
     gem.email = "cyx.ucron@gmail.com"
     gem.homepage = "http://github.com/sinefunc/bullhorn"
     gem.authors = ["Cyril David"]
+    gem.add_dependency "mime-types", ">= 0"
     gem.add_development_dependency "contest", ">= 0"
     gem.add_development_dependency "sinatra", ">= 0"
     gem.add_development_dependency "rack-test", ">= 0"
