@@ -14,7 +14,7 @@ require 'mail'
 class Bullhorn
   VERSION = "0.0.1"
   
-  FILTERING = %(['"]?%s['"]?=>?[^&\s]*)
+  FILTERING = %(['"]?%s['"]?=>?([^&\s]*))
 
   def initialize(app, options = {})
     @to      = options[:to]      || raise(ArgumentError, ":to is required")
@@ -59,7 +59,9 @@ private
   def sanitize_filtered_parameters(str)
     str.dup.tap do |ret|
       @filters.each do |filter|
-        ret.gsub!(Regexp.new(FILTERING % filter), '')
+        ret.gsub!(Regexp.new(FILTERING % filter)) { |m| 
+          m.gsub($1, '[FILTERED]')
+        }
       end
     end
   end
