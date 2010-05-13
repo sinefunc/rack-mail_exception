@@ -3,7 +3,7 @@ require 'erb'
 
 if RUBY_VERSION >= "1.9.1"
   # The bundled mail library doesn't include activesupport.
-  # Caveat is, it needs Ruby 1.9.x at least for the multibyte character 
+  # Caveat is, it needs Ruby 1.9.x at least for the multibyte character
   # support. Why bother? Because ActiveSupport is evil, and we don't use
   # Rails. The memory overhead is just not worth it.
   $:.unshift(File.join(File.dirname(__FILE__), '..', 'vendor', 'mail', 'lib'))
@@ -13,11 +13,15 @@ require 'mail'
 
 class Bullhorn
   VERSION = "0.0.1"
+  
+  FILTERING = %(['"]?%s['"]?=>?[^&\s]*)
 
   def initialize(app, options = {})
     @to      = options[:to]      || raise(ArgumentError, ":to is required")
     @from    = options[:from]    || raise(ArgumentError, ":from is required")
     @subject = options[:subject] || "[Application Exception] %s"
+
+    @filters = Array(options[:filters])
     @app     = app
   end
 
@@ -41,7 +45,7 @@ private
       :to      => @to,
       :from    => @from,
       :subject => @subject % exception,
-      :body    => text
+      :body    => sanitize_filtered_parameters(text)
     )
   end
 
@@ -49,6 +53,14 @@ private
     if io = env['rack.input']
       io.rewind if io.respond_to?(:rewind)
       io.read
+    end
+  end
+
+  def sanitize_filtered_parameters(str)
+    str.dup.tap do |ret|
+      @filters.each do |filter|
+        ret.gsub!(Regexp.new(FILTERING % filter), '')
+      end
     end
   end
 
