@@ -1,6 +1,9 @@
 require 'rubygems'
 require 'test/unit'
-require 'shoulda'
+require 'contest'
+require 'sinatra/base'
+require 'rack/test'
+require 'mocha'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
