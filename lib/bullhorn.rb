@@ -1,24 +1,28 @@
 require 'mime/types'
+require 'erb'
 
 if RUBY_VERSION >= "1.9.1"
   # The bundled mail library doesn't include activesupport.
+  # Caveat is, it needs Ruby 1.9.x at least for the multibyte character 
+  # support. Why bother? Because ActiveSupport is evil, and we don't use
+  # Rails. The memory overhead is just not worth it.
   $:.unshift(File.join(File.dirname(__FILE__), '..', 'vendor', 'mail', 'lib'))
 end
 
 require 'mail'
 
 class Bullhorn
-  attr :options
+  VERSION = "0.0.1"
 
   def initialize(app, options = {})
-    @to      = options[:to] || raise(ArgumentError, ":to is required")
-    @from    = options[:from] || raise(ArgumentError, ":from is required")
+    @to      = options[:to]      || raise(ArgumentError, ":to is required")
+    @from    = options[:from]    || raise(ArgumentError, ":from is required")
     @subject = options[:subject] || "[Application Exception] %s"
     @app     = app
   end
 
   def call(env)
-    status, headers, body = 
+    status, headers, body =
       begin
         @app.call(env)
       rescue Exception => ex
