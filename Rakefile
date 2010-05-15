@@ -4,11 +4,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "bullhorn"
+    gem.name = "rack-mail_exception"
     gem.summary = %Q{Rack middleware for sending exceptions}
     gem.description = %Q{Uses the mail library for sending exceptions}
     gem.email = "cyx.ucron@gmail.com"
-    gem.homepage = "http://github.com/sinefunc/bullhorn"
+    gem.homepage = "http://github.com/sinefunc/mail-exception"
     gem.authors = ["Cyril David"]
     gem.add_dependency "mime-types", ">= 0"
     gem.add_development_dependency "contest", ">= 0"
@@ -50,7 +50,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "bullhorn #{version}"
+  rdoc.title = "mail-exception #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end

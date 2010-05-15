@@ -7,7 +7,7 @@ require 'mocha'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'bullhorn'
+require 'rack/mail_exception'
 
 class Test::Unit::TestCase
 end

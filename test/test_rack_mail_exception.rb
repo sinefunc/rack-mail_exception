@@ -1,8 +1,8 @@
 require 'helper'
 
-class TestBullhorn < Test::Unit::TestCase
+class TestRackMailException < Test::Unit::TestCase
   class HelloWorld < Sinatra::Base
-    use Bullhorn, :to => "me@me.com", :from => "you@you.com",
+    use Rack::MailException, :to => "me@me.com", :from => "you@you.com",
       :subject => "[FooBar Exception] %s"
   
     enable :raise_errors
@@ -22,7 +22,7 @@ class TestBullhorn < Test::Unit::TestCase
   end
 
   class FilteredPassword < Sinatra::Base
-    use Bullhorn, :to => "me@me.com", :from => "you@you.com",
+    use Rack::MailException, :to => "me@me.com", :from => "you@you.com",
       :subject    => "[FooBar Exception] %s",
       :filters    => %w(password password_confirmation)
 

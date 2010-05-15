@@ -1,6 +1,7 @@
-= bullhorn
+= mail-exception
 
-Description goes here.
+A basic exception mailer inspired by rack/contrib/mailexceptions, 
+but uses the mail gem instead of tmail.
 
 == Note on Patches/Pull Requests
  
