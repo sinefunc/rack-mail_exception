@@ -1,10 +1,30 @@
 = mail-exception
 
-A basic exception mailer inspired by rack/contrib/mailexceptions, 
+A basic exception mailer inspired by rack/contrib/mailexceptions,
 but uses the mail gem instead of tmail.
 
+== Example usage:
+
+    require 'rubygems'
+
+    use Rack::MailException, :to => "me@me.com"
+
+    # if you have a different settings from the default Mail settings
+    # you need to configure it.
+    # sample GMail SMTP config follows:
+    Mail.default do
+      delivery_method :smtp,
+      :address: "smtp.gmail.com"
+      :port: "587"
+      :domain: "yourdomain.com"
+      :user_name: "user@yourdomain.com"
+      :password: "__PASSWORD__"
+      :authentication: :plain
+      :enable_starttls_auto: true
+    end
+
 == Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a
